@@ -410,3 +410,111 @@ CREATE OR REPLACE VIEW v_takes AS
 
 SELECT *
 FROM v_takes
+
+CREATE OR REPLACE VIEW cs_student AS
+	SELECT s.stu_id, s.resident_id, s.name, s.YEAR, s.address, s.dept_id
+	FROM STUDENT s , DEPARTMENT d 
+	WHERE s.dept_id = d.dept_id AND 
+		d.dept_name = '컴퓨터공학과'
+		
+SELECT * FROM cs_student 
+
+INSERT INTO V_TAKES
+VALUES ('1292502','C101-01')
+
+SELECT * FROM TAKES
+
+DROP VIEW V_TAKES
+
+CREATE OR REPLACE VIEW v_takes AS
+SELECT stu_id, class_id
+FROM TAKES
+WITH READ ONLY
+
+SELECT * FROM TAKES
+
+INSERT INTO V_TAKES
+VALUES ('1292502', 'C101-01')
+
+SELECT ename, hiredate, TO_number(to_char(hiredate, 'YYYY')) 입사년도,
+to_number(TO_char(hiredate,'MM')) 입사월,
+to_number(to_char(hiredate, 'DD')) 입사일
+FROM emp;
+
+SELECT ename, hiredate,
+to_char(hiredate, 'YYYY') 입사년도,
+TO_char(hiredate, 'MM') 월,
+TO_char(hiredate, 'DD') 일
+FROM emp;
+
+SELECT TO_CHAR(sysdate, 'YYYY/MM/DD') 날짜,
+to_char(sysdate, 'YYYY. MON. DAY') 문자형
+FROM dual;
+
+SELECT ename,
+CASE WHEN sal>2000
+THEN sal
+ELSE 2000
+END revised_salart
+FROM emp;
+
+SELECT loc,
+decode(loc,
+'NEW YORK', 'EAST',
+'BOSTON', 'EAST',
+'DALLAS', 'CENTER',
+'CHICAGO', 'CENTER') area
+FROM DEPT;
+
+SELECT ename,
+CASE WHEN sal>=3000 THEN 'high'
+WHEN sal>=1000 THEN 'mid'
+ELSE 'low'
+END AS salary_grade
+FROM emp;
+
+SELECT * FROM emp
+
+SELECT empno, ename, sal, comm, (sal+COMM)
+FROM emp
+
+SELECT empno, ename, sal,
+CASE WHEN comm IS NULL
+THEN 0
+ELSE comm
+END AS commission
+FROM emp;
+
+SELECT empno, ename, sal, nvl(comm,0), sal+nvl(comm,0)
+FROM emp;
+
+SELECT *FROM EMP
+WHERE rownum <= 5;
+
+SELECT *
+FROM (
+select ename, sal, comm, SAL+nvl(comm,0) salsum
+FROM EMP
+ORDER BY 4 DESC
+)
+WHERE rownum <= 5;
+
+SELECT * FROM EMP
+where sal BETWEEN 1500 AND 2500;
+
+SELECT dname, job,
+count(*) "Total empl",
+sum(sal) "Total Sal"
+FROM emp, DEPT
+WHERE dept.deptno = emp.DEPTNO
+GROUP BY dname, job
+ORDER BY dname, job;
+
+
+SELECT dname, job,
+count(*) "Total empl",
+sum(sal) "Total Sal"
+FROM emp, DEPT
+WHERE dept.deptno = emp.DEPTNO
+GROUP BY rollup (dname, job)
+ORDER BY dname, job;
