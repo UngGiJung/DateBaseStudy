@@ -497,7 +497,7 @@ select ename, sal, comm, SAL+nvl(comm,0) salsum
 FROM EMP
 ORDER BY 4 DESC
 )
-WHERE rownum <= 5;
+WHERE rownum <= 14;
 
 SELECT * FROM EMP
 where sal BETWEEN 1500 AND 2500;
@@ -518,3 +518,11 @@ FROM emp, DEPT
 WHERE dept.deptno = emp.DEPTNO
 GROUP BY rollup (dname, job)
 ORDER BY dname, job;
+
+DELETE FROM DEPT 
+WHERE deptno = 90
+
+SELECT * FROM dept
+
+SELECT max(deptno)
+FROM dept
